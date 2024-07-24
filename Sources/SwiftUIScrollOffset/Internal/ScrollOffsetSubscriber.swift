@@ -32,7 +32,9 @@ internal struct ScrollOffsetSubscriber: ViewModifier {
                 }
             )
             .onValueChange(id) { oldID, newID in
+              DispatchQueue.main.async {
                 ScrollSubscriptionStore.shared.updateSubscription(from: oldID, to: newID)
+              }
             }
             .onDisappear {
                 ScrollSubscriptionStore.shared.unsubscribe(id: id)
