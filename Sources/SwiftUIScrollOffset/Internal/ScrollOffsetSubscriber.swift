@@ -25,7 +25,9 @@ internal struct ScrollOffsetSubscriber: ViewModifier {
                             ScrollSubscriptionStore.shared.updateOffset(for: id)
                         }
                         .onValueChange(geometry.frame(in: .global)) { _, _ in
+                          DispatchQueue.main.async {
                             ScrollSubscriptionStore.shared.updateOffset(for: id)
+                          }
                         }
                 }
             )
