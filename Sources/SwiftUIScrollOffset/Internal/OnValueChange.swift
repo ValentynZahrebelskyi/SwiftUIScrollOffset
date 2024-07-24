@@ -22,14 +22,16 @@ where V : Equatable
     var value: V
     
     func body(content: Content) -> some View {
-        if #available(iOS 17, macOS 14, tvOS 17, visionOS 1, *) {
-            content
-                .onChange(of: value, action)
-        } else {
+//        if #available(iOS 17, macOS 14, tvOS 17, visionOS 1, *) {
+//            content
+//                .onChange(of: value, action)
+//        } else {
             content
                 .onChange(of: value) { [oldValue = value] newValue in
+                  DispatchQueue.main.async {
                     action(oldValue, newValue)
+                  }
                 }
-        }
+//        }
     }
 }
