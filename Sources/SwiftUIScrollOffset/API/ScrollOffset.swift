@@ -8,7 +8,7 @@ import SwiftUI
 
 @propertyWrapper public struct ScrollOffset: DynamicProperty {
     @Environment(\.scrollPublisherID) private var scrollPublisherID
-    @StateObject private var stateObject = ScrollOffsetStateObject()
+    @ObservedObject private var stateObject = ScrollOffsetStateObject()
     @State private var baseState = BaseScrollOffsetState.build()
     private var edge: Edge
     private var range: ClosedRange<CGFloat>
