@@ -32,12 +32,10 @@ import SwiftUI
     }
     
     public func update() {
-        DispatchQueue.main.async {
-            if #available(iOS 17, macOS 14, tvOS 17, visionOS 1, *) {
-                state.update(edge: edge, id: scrollOffsetID.id ?? scrollPublisherID, range: range)
-            } else {
-                stateObject.update(edge: edge, id: scrollOffsetID.id ?? scrollPublisherID, range: range)
-            }
+        if #available(iOS 17, macOS 14, tvOS 17, visionOS 1, *) {
+            state.update(edge: edge, id: scrollOffsetID.id ?? scrollPublisherID, range: range)
+        } else {
+            stateObject.update(edge: edge, id: scrollOffsetID.id ?? scrollPublisherID, range: range)
         }
     }
 }
