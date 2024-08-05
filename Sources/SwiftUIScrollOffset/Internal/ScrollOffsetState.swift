@@ -41,16 +41,20 @@ internal final class ScrollOffsetState: BaseScrollOffsetState {
     
     @MainActor
     private func updateValue() {
-        let edgeOffset: CGFloat = if let id, let edge, let offset = ScrollSubscriptionStore.shared[offset: id] {
-            offset[edge]
-        } else {
-            .zero
-        }
-        
-        let newValue = min(max(edgeOffset, range.lowerBound), range.upperBound)
-        
-        if value != newValue {
-            value = newValue
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            
+            let edgeOffset: CGFloat = if let id, let edge, let offset = ScrollSubscriptionStore.shared[offset: id] {
+                offset[edge]
+            } else {
+                .zero
+            }
+            
+            let newValue = min(max(edgeOffset, range.lowerBound), range.upperBound)
+            
+            if value != newValue {
+                value = newValue
+            }
         }
     }
 }
