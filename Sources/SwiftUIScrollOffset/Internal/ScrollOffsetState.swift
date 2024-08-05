@@ -13,6 +13,7 @@ import SwiftUI
 internal final class ScrollOffsetState: BaseScrollOffsetState {
     private(set) var value = CGFloat.zero
     
+    @MainActor
     func update(edge: Edge, id: AnyHashable?, range: ClosedRange<CGFloat>) {
         self.edge = edge
         self.range = range
@@ -38,6 +39,7 @@ internal final class ScrollOffsetState: BaseScrollOffsetState {
     private var range: ClosedRange<CGFloat> = -CGFloat.infinity...CGFloat.infinity
     private var subscriber: AnyCancellable?
     
+    @MainActor
     private func updateValue() {
         let edgeOffset: CGFloat = if let id, let edge, let offset = ScrollSubscriptionStore.shared[offset: id] {
             offset[edge]
