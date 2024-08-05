@@ -8,7 +8,7 @@ import SwiftUI
 
 @propertyWrapper public struct ScrollOffset: DynamicProperty {
     @Environment(\.scrollPublisherID) private var scrollPublisherID
-    @ObservedObject private var stateObject = ScrollOffsetStateObject()
+    @StateObject private var stateObject = ScrollOffsetStateObject()
     @State private var baseState = BaseScrollOffsetState.build()
     private var edge: Edge
     private var range: ClosedRange<CGFloat>
@@ -32,10 +32,12 @@ import SwiftUI
     }
     
     public func update() {
-        if #available(iOS 17, macOS 14, tvOS 17, visionOS 1, *) {
-            state.update(edge: edge, id: scrollOffsetID.id ?? scrollPublisherID, range: range)
-        } else {
-            stateObject.update(edge: edge, id: scrollOffsetID.id ?? scrollPublisherID, range: range)
+        DispatchQueue.main.async {
+            if #available(iOS 17, macOS 14, tvOS 17, visionOS 1, *) {
+                state.update(edge: edge, id: scrollOffsetID.id ?? scrollPublisherID, range: range)
+            } else {
+                stateObject.update(edge: edge, id: scrollOffsetID.id ?? scrollPublisherID, range: range)
+            }
         }
     }
 }
